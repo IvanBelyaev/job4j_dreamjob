@@ -1,5 +1,6 @@
 package ru.job4j.dream.store;
 
+import ru.job4j.dream.model.Candidate;
 import ru.job4j.dream.model.Post;
 
 import java.util.Collection;
@@ -13,8 +14,10 @@ import java.util.concurrent.ConcurrentHashMap;
 public class Store {
     /** Single instance of the class. */
     private static final Store INST = new Store();
-    /** Storage. */
-    private Map<Integer, Post> posts = new ConcurrentHashMap<>();
+    /** Vacancies. */
+    private final Map<Integer, Post> posts = new ConcurrentHashMap<>();
+    /** Candidates. */
+    private final Map<Integer, Candidate> candidates = new ConcurrentHashMap<>();
 
     /**
      * Constructor.
@@ -23,6 +26,9 @@ public class Store {
         posts.put(1, new Post(1, "Junior Java Job", "no work experience required"));
         posts.put(2, new Post(2, "Middle Java Job", "Experience from 2 years"));
         posts.put(3, new Post(3, "Senior Java Job", "Experience from 5 years"));
+        candidates.put(1, new Candidate(1, "Junior Java"));
+        candidates.put(2, new Candidate(2, "Middle Java"));
+        candidates.put(3, new Candidate(3, "Senior Java"));
     }
 
     /**
@@ -37,7 +43,15 @@ public class Store {
      * Gets all vacancies.
      * @return all vacancies.
      */
-    public Collection<Post> findAll() {
+    public Collection<Post> findAllPosts() {
         return posts.values();
+    }
+
+    /**
+     * Gets all candidates.
+     * @return all candidates.
+     */
+    public Collection<Candidate> findAllCandidates() {
+        return candidates.values();
     }
 }
