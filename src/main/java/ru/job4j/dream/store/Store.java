@@ -19,8 +19,10 @@ public class Store {
     private final Map<Integer, Post> posts = new ConcurrentHashMap<>();
     /** Candidates. */
     private final Map<Integer, Candidate> candidates = new ConcurrentHashMap<>();
-    /** ID counter. */
+    /** ID counter for posts. */
     private static AtomicInteger POST_ID = new AtomicInteger(4);
+    /** ID counter for candidates. */
+    private static AtomicInteger CANDIDATE_ID = new AtomicInteger(4);
 
     /**
      * Constructor.
@@ -49,6 +51,15 @@ public class Store {
     public void save(Post post) {
         post.setId(POST_ID.incrementAndGet());
         posts.put(post.getId(), post);
+    }
+
+    /**
+     * Saves a new candidate.
+     * @param candidate new candidate.
+     */
+    public void save(Candidate candidate) {
+        candidate.setId(CANDIDATE_ID.incrementAndGet());
+        candidates.put(candidate.getId(), candidate);
     }
 
     /**

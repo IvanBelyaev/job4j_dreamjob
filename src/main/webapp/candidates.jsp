@@ -22,7 +22,13 @@
 </head>
 <body>
 <div class="container pt-3">
-
+    <div class="row">
+        <ul class="nav">
+            <li class="nav-item">
+                <a class="nav-link" href="<%=request.getContextPath()%>">Главная страница</a>
+            </li>
+        </ul>
+    </div>
     <div class="row">
         <div class="card" style="width: 100%">
             <div class="card-header">
@@ -32,7 +38,7 @@
                 <table class="table">
                     <thead>
                     <tr>
-                        <th scope="col">Названия</th>
+                        <th scope="col">Имя кандидата</th>
                     </tr>
                     </thead>
                     <tbody>
