@@ -49,7 +49,9 @@ public class Store {
      * @param post new vacancy.
      */
     public void save(Post post) {
-        post.setId(POST_ID.incrementAndGet());
+        if (post.getId() == 0) {
+            post.setId(POST_ID.incrementAndGet());
+        }
         posts.put(post.getId(), post);
     }
 
@@ -58,8 +60,28 @@ public class Store {
      * @param candidate new candidate.
      */
     public void save(Candidate candidate) {
-        candidate.setId(CANDIDATE_ID.incrementAndGet());
+        if (candidate.getId() == 0) {
+            candidate.setId(CANDIDATE_ID.incrementAndGet());
+        }
         candidates.put(candidate.getId(), candidate);
+    }
+
+    /**
+     * Finds a vacancy by ID.
+     * @param id vacancy ID.
+     * @return found job or null if nothing was found.
+     */
+    public Post findPostById(int id) {
+        return posts.get(id);
+    }
+
+    /**
+     * Finds a candidate by ID.
+     * @param id candidate ID.
+     * @return found candidate or null if nothing was found.
+     */
+    public Candidate findCandidateById(int id) {
+        return candidates.get(id);
     }
 
     /**
