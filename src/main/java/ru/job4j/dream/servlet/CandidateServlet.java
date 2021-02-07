@@ -15,6 +15,19 @@ import java.io.IOException;
  */
 public class CandidateServlet extends HttpServlet {
     /**
+     * Handles get requests.
+     * @param req request.
+     * @param resp response.
+     * @throws ServletException possible exception.
+     * @throws IOException possible exception.
+     */
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        req.setAttribute("candidates", Store.instOf().findAllCandidates());
+        req.getRequestDispatcher("candidates.jsp").forward(req, resp);
+    }
+
+    /**
      * Handles post requests.
      * @param req request.
      * @param resp response.
@@ -30,6 +43,6 @@ public class CandidateServlet extends HttpServlet {
                         req.getParameter("name")
                 )
         );
-        resp.sendRedirect(req.getContextPath() + "/candidates.jsp");
+        resp.sendRedirect(req.getContextPath() + "/candidates.do");
     }
 }

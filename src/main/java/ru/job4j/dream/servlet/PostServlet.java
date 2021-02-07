@@ -15,6 +15,19 @@ import java.io.IOException;
  */
 public class PostServlet extends HttpServlet {
     /**
+     * Handles get requests.
+     * @param req request.
+     * @param resp response.
+     * @throws ServletException possible exception.
+     * @throws IOException possible exception.
+     */
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        req.setAttribute("posts", Store.instOf().findAllPosts());
+        req.getRequestDispatcher("posts.jsp").forward(req, resp);
+    }
+
+    /**
      * Handles post request.
      * @param req request.
      * @param resp response.
@@ -31,6 +44,6 @@ public class PostServlet extends HttpServlet {
                         req.getParameter("desc")
                 )
         );
-        resp.sendRedirect(req.getContextPath() + "/posts.jsp");
+        resp.sendRedirect(req.getContextPath() + "/posts.do");
     }
 }

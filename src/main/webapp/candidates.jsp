@@ -1,6 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
-<%@ page import="ru.job4j.dream.store.Store" %>
 <%@ page import="ru.job4j.dream.model.Candidate" %>
+<%@ page import="java.util.Collection" %>
 <!doctype html>
 <html lang="en">
 <head>
@@ -26,7 +26,7 @@
     <div class="row">
         <ul class="nav">
             <li class="nav-item">
-                <a class="nav-link" href="<%=request.getContextPath()%>">Главная страница</a>
+                <a class="nav-link" href="<%=request.getContextPath()%>/index.do">Главная страница</a>
             </li>
         </ul>
     </div>
@@ -43,7 +43,7 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <% for (Candidate can : Store.instOf().findAllCandidates()) { %>
+                    <% for (Candidate can : (Collection<Candidate>) request.getAttribute("candidates")) { %>
                     <tr>
                         <td>
                             <a href="<%=request.getContextPath()%>/candidate/edit.jsp?id=<%=can.getId()%>">
