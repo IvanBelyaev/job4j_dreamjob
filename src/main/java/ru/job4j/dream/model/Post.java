@@ -23,11 +23,11 @@ public class Post {
      * @param name job title.
      * @param description vacancy description.
      */
-    public Post(int id, String name, String description) {
+    public Post(int id, String name, String description, LocalDateTime created) {
         this.id = id;
         this.name = name;
         this.description = description;
-        this.created = LocalDateTime.now();
+        this.created = created;
     }
 
     /**
