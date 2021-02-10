@@ -118,7 +118,7 @@ public class PsqlStore implements Store {
              )
         ) {
             ps.setString(1, candidate.getName());
-            ps.setInt(4, candidate.getId());
+            ps.setInt(2, candidate.getId());
             ps.executeUpdate();
         } catch (SQLException e) {
             logger.error("Exception in updateCandidate()", e);
