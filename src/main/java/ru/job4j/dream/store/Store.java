@@ -47,4 +47,10 @@ public interface Store {
      * @return all candidates.
      */
     Collection<Candidate> findAllCandidates();
+
+    /**
+     * Deletes candidate.
+     * @param id candidate ID.
+     */
+    void deleteCandidate(int id);
 }

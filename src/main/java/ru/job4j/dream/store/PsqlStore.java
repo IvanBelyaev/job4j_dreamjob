@@ -93,6 +93,22 @@ public class PsqlStore implements Store {
         return candidates;
     }
 
+    /**
+     * Deletes candidate.
+     * @param id candidate ID.
+     */
+    @Override
+    public void deleteCandidate(int id) {
+        try (Connection cn = pool.getConnection();
+             PreparedStatement ps =  cn.prepareStatement("DELETE FROM candidates WHERE id = ?")
+        ) {
+            ps.setInt(1, id);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            logger.error("Exception in findAllCandidates()", e);
+        }
+    }
+
     @Override
     public void save(Post post) {
         if (post.getId() == 0) {

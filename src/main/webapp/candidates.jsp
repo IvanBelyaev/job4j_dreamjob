@@ -28,7 +28,7 @@
     <div class="row">
         <ul class="nav">
             <li class="nav-item">
-                <a class="nav-link" href="<%=request.getContextPath()%>/index.do">Главная страница</a>
+                <a class="nav-link" href='<c:url value="/index.do" />'>Главная страница</a>
             </li>
         </ul>
     </div>
@@ -41,17 +41,33 @@
                 <table class="table">
                     <thead>
                     <tr>
+                        <th scope="col">Фото</th>
                         <th scope="col">Имя кандидата</th>
+                        <th scope="col"></th>
                     </tr>
                     </thead>
                     <tbody>
                     <c:forEach items="${candidates}" var="candidate">
                     <tr>
                         <td>
+                            <img src='<c:url value="/download.do?id=${candidate.id}"/>' class="img-thumbnail" width="100px" height="100px" alt="avatar"/>
+                            <a href='<c:url value="/PhotoUpload.jsp?id=${candidate.id}"/>'>
+                                <i class="fa fa-plus mr-3"></i>
+                            </a>
+                            <a href='<c:url value="/deleteImage.do?id=${candidate.id}"/>'>
+                                <i class="fa fa-trash"></i>
+                            </a>
+                        </td>
+                        <td>
                             <a href='<c:url value="/candidate/edit.jsp?id=${candidate.id}"/>'>
                                 <i class="fa fa-edit mr-3"></i>
                             </a>
                             <c:out value="${candidate.name}" />
+                        </td>
+                        <td>
+                            <a href='<c:url value="/deleteCandidate.do?id=${candidate.id}"/>'>
+                                <i class="fa fa-times"></i>
+                            </a>
                         </td>
                     </tr>
                     </c:forEach>

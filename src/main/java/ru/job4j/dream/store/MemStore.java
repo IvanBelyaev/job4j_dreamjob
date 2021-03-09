@@ -101,4 +101,13 @@ public class MemStore implements Store {
     public Collection<Candidate> findAllCandidates() {
         return candidates.values();
     }
+
+    /**
+     * Deletes candidate.
+     * @param id candidate ID.
+     */
+    @Override
+    public void deleteCandidate(int id) {
+        candidates.remove(id);
+    }
 }
