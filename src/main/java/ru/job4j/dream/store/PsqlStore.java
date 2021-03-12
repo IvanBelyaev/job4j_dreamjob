@@ -5,6 +5,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ru.job4j.dream.model.Candidate;
 import ru.job4j.dream.model.Post;
+import ru.job4j.dream.model.User;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -105,7 +106,7 @@ public class PsqlStore implements Store {
             ps.setInt(1, id);
             ps.executeUpdate();
         } catch (SQLException e) {
-            logger.error("Exception in findAllCandidates()", e);
+            logger.error("Exception in deleteCandidate()", e);
         }
     }
 
@@ -237,5 +238,42 @@ public class PsqlStore implements Store {
             logger.error("Exception in findCandidateById()", e);
         }
         return candidate;
+    }
+
+    @Override
+    public void addUser(User user) {
+        try (Connection cn = pool.getConnection();
+             PreparedStatement ps =  cn.prepareStatement(
+                     "INSERT INTO users(name, email, pass) VALUES (?, ?, ?)"
+             )
+        ) {
+            ps.setString(1, user.getName());
+            ps.setString(2, user.getEmail());
+            ps.setString(3, user.getPassword());
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            logger.error("Exception in addUser()", e);
+        }
+    }
+
+    @Override
+    public User findUserByEmail(String email) {
+        User user = null;
+        try (Connection cn = pool.getConnection();
+             PreparedStatement ps =  cn.prepareStatement("SELECT * FROM users WHERE email=?")
+        ) {
+            ps.setString(1, email);
+            ResultSet it = ps.executeQuery();
+            if (it.next()) {
+                user = new User();
+                user.setId(it.getInt("id"));
+                user.setName(it.getString("name"));
+                user.setName(it.getString("email"));
+                user.setName(it.getString("pass"));
+            }
+        } catch (SQLException e) {
+            logger.error("Exception in findUserByEmail()", e);
+        }
+        return user;
     }
 }
