@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jstl/core" %>
 <%@ page contentType="text/html; charset=UTF-8" %>
 <%@ page import="ru.job4j.dream.model.Candidate" %>
 <%@ page import="ru.job4j.dream.store.PsqlStore" %>
@@ -22,8 +23,18 @@
 </head>
 <body>
 <div class="container pt-3">
-
     <div class="row">
+        <ul class="nav">
+            <li class="nav-item">
+                <a class="nav-link" href='<c:url value="/index.do" />'>Главная страница</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="<%=request.getContextPath()%>/reg.do">Регистрация</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="<%=request.getContextPath()%>/auth.do">Войти</a>
+            </li>
+        </ul>
         <div class="card" style="width: 100%">
             <div class="card-header">
                 Авторизация

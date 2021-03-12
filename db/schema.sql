@@ -10,9 +10,9 @@ CREATE TABLE candidates (
     name TEXT
 );
 
-CREATE TABLE users {
+CREATE TABLE users (
     id SERIAL PRIMARY KEY,
     name TEXT,
     email TEXT,
     pass TEXT
-};
+);

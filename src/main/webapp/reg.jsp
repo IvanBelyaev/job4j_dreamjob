@@ -1,7 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jstl/core" %>
 <%@ page contentType="text/html; charset=UTF-8" %>
-<%@ page import="ru.job4j.dream.model.Post" %>
-<%@ page import="java.time.LocalDateTime" %>
+<%@ page import="ru.job4j.dream.model.Candidate" %>
 <%@ page import="ru.job4j.dream.store.PsqlStore" %>
 <!doctype html>
 <html lang="en">
@@ -23,13 +22,6 @@
     <title>Работа мечты</title>
 </head>
 <body>
-<%
-    String id = request.getParameter("id");
-    Post post = new Post(0, "", "", LocalDateTime.now());
-    if (id != null) {
-        post = PsqlStore.instOf().findPostById(Integer.valueOf(id));
-    }
-%>
 <div class="container pt-3">
     <div class="row">
         <ul class="nav">
@@ -37,42 +29,31 @@
                 <a class="nav-link" href='<c:url value="/index.do" />'>Главная страница</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="<%=request.getContextPath()%>/posts.do">Вакансии</a>
+                <a class="nav-link" href="<%=request.getContextPath()%>/reg.do">Регистрация</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="<%=request.getContextPath()%>/candidates.do">Кандидаты</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="<%=request.getContextPath()%>/editPost.do">Добавить вакансию</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="<%=request.getContextPath()%>/editCandidate.do">Добавить кандидата</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="<%=request.getContextPath()%>/auth.do"> <c:out value="${user.name}"/> | Выйти</a>
+                <a class="nav-link" href="<%=request.getContextPath()%>/auth.do">Войти</a>
             </li>
         </ul>
-    </div>
-    <div class="row">
         <div class="card" style="width: 100%">
             <div class="card-header">
-                <% if (id == null) { %>
-                Новая вакансия.
-                <% } else { %>
-                Редактирование вакансии.
-                <% } %>
+                Регистрация
             </div>
             <div class="card-body">
-                <form action="<%=request.getContextPath()%>/posts.do?id=<%=post.getId()%>" method="post">
+                <form action="<%=request.getContextPath()%>/reg.do" method="post">
                     <div class="form-group">
                         <label>Имя</label>
-                        <input type="text" class="form-control" name="name" value="<%=post.getName()%>">
+                        <input type="text" class="form-control" name="name">
                     </div>
                     <div class="form-group">
-                        <label>Описание</label>
-                        <input type="text" class="form-control" name="desc" value="<%=post.getDescription()%>">
+                        <label>Почта</label>
+                        <input type="text" class="form-control" name="email">
                     </div>
-                    <button type="submit" class="btn btn-primary">Сохранить</button>
+                    <div class="form-group">
+                        <label>Пароль</label>
+                        <input type="text" class="form-control" name="password">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Зарегистрировать</button>
                 </form>
             </div>
         </div>

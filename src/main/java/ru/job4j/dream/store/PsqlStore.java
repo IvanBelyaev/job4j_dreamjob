@@ -263,13 +263,14 @@ public class PsqlStore implements Store {
              PreparedStatement ps =  cn.prepareStatement("SELECT * FROM users WHERE email=?")
         ) {
             ps.setString(1, email);
-            ResultSet it = ps.executeQuery();
-            if (it.next()) {
-                user = new User();
-                user.setId(it.getInt("id"));
-                user.setName(it.getString("name"));
-                user.setName(it.getString("email"));
-                user.setName(it.getString("pass"));
+            try (ResultSet it = ps.executeQuery();) {
+                if (it.next()) {
+                    user = new User();
+                    user.setId(it.getInt("id"));
+                    user.setName(it.getString("name"));
+                    user.setEmail(it.getString("email"));
+                    user.setPassword(it.getString("pass"));
+                }
             }
         } catch (SQLException e) {
             logger.error("Exception in findUserByEmail()", e);
