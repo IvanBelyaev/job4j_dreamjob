@@ -28,7 +28,6 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 @RunWith(PowerMockRunner.class)
-@PrepareForTest(PsqlStore.class)
 public class PostServletTest {
     /**
      * Test for doPost method.
@@ -36,6 +35,7 @@ public class PostServletTest {
      * @throws IOException possible exception.
      */
     @Test
+    @PrepareForTest(PsqlStore.class)
     public void whenAddPostThenStoreIt() throws ServletException, IOException {
         Store store = MemStore.instOf();
         PowerMockito.mockStatic(PsqlStore.class);
@@ -54,7 +54,9 @@ public class PostServletTest {
      * @throws ServletException possible exception.
      * @throws IOException possible exception.
      */
+
     @Test
+    @PrepareForTest(PsqlStore.class)
     public void whenDoGetThenPostsAttributeMustBeSet() throws ServletException, IOException {
         Store store = MemStore.instOf();
         PowerMockito.mockStatic(PsqlStore.class);
