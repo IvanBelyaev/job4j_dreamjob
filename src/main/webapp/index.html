@@ -27,6 +27,23 @@
             }
             return result;
         }
+
+        function sendData() {
+            if (validate()) {
+                let firstName = $("<td></td>").text($("#firstName").val());
+                let lastName = $("<td></td>").text($("#lastName").val());
+                let description = $("<td></td>").text($("#description").val());
+                let sex;
+                if ($('#male').is(':checked')) {
+                    sex = "Мужской";
+                } else {
+                    sex = "Женский";
+                }
+                sex = $("<td></td>").text(sex);
+                let row = $("<tr></tr>").append(firstName, lastName, sex, description);
+                $('#table tr:last').after(row);
+            }
+        }
     </script>
 </head>
 <body>
@@ -55,11 +72,11 @@
             <label for="description">Описание:</label>
             <textarea id="description" class="form-control" name="description" placeholder="Добавьте описание"></textarea>
         </div>
-        <button type="button" class="btn btn-default" onclick="validate()">Добавить</button>
+        <button type="button" class="btn btn-default" onclick="sendData()">Добавить</button>
     </form>
 
     <h2>Таблица пользователей</h2>
-    <table class="table">
+    <table class="table" id="table">
         <thead>
         <tr>
             <th>Имя</th>
