@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Пользователи</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script>
+        function validate() {
+            let result = true;
+            let formData = {};
+            formData.firstName = $('#firstName').val();
+            formData.lastName = $('#lastName').val();
+            formData.description = $('#description').val();
+            for (let field in formData) {
+                if (formData[field] === '') {
+                    alert($("#" + field).attr("placeholder"));
+                    result = false;
+                }
+            }
+
+            if (!$('input[name="sex"]').is(':checked')) {
+                alert("Выберите пол");
+                result = false;
+            }
+            return result;
+        }
+
+        function sendData() {
+            if (validate()) {
+                let firstName = $("<td></td>").text($("#firstName").val());
+                let lastName = $("<td></td>").text($("#lastName").val());
+                let description = $("<td></td>").text($("#description").val());
+                let sex;
+                if ($('#male').is(':checked')) {
+                    sex = "Мужской";
+                } else {
+                    sex = "Женский";
+                }
+                sex = $("<td></td>").text(sex);
+                let row = $("<tr></tr>").append(firstName, lastName, sex, description);
+                $('#table tr:last').after(row);
+            }
+        }
+    </script>
+</head>
+<body>
+
+<div class="container-fluid">
+    <h2>Новый пользователь</h2>
+    <form action="/action_page.php">
+        <div class="form-group">
+            <label for="firstName">Имя:</label>
+            <input type="text" class="form-control" id="firstName" placeholder="Введите имя" name="firstName">
+        </div>
+        <div class="form-group">
+            <label for="lastName">Фамилия:</label>
+            <input type="text" class="form-control" id="lastName" placeholder="Введите фамилию" name="lastName">
+        </div>
+        <div class="form-group">
+            <label>Пол:</label>
+            <div class="radio-inline">
+                <label><input type="radio" id="male" name="sex" checked>Мужской</label>
+            </div>
+            <div class="radio-inline">
+                <label><input type="radio" id="female" name="sex">Женский</label>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="description">Описание:</label>
+            <textarea id="description" class="form-control" name="description" placeholder="Добавьте описание"></textarea>
+        </div>
+        <button type="button" class="btn btn-default" onclick="sendData()">Добавить</button>
+    </form>
+
+    <h2>Таблица пользователей</h2>
+    <table class="table" id="table">
+        <thead>
+        <tr>
+            <th>Имя</th>
+            <th>Фамилия</th>
+            <th>Пол</th>
+            <th>Описание</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>Иван</td>
+            <td>Иванов</td>
+            <td>Мужской</td>
+            <td>Опыт работы 2 года</td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+</body>
+</html>
