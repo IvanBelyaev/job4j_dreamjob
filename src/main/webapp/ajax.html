@@ -10,13 +10,16 @@
 
     <script>
         function sendGreeting() {
+            let formData = {};
+            formData.name = $('#exampleInputEmail1').val();
+            let jsonData = JSON.stringify(formData);
             $.ajax({
-                type: 'GET',
+                type: 'POST',
                 url: 'http://localhost:8080/job4j_dreamjob/greet',
-                data: 'name=' + $('#exampleInputEmail1').val(),
-                dataType: 'text'
+                data: jsonData,
+                dataType: 'json'
             }).done(function(data) {
-                $("#emailForm h3").text(data)
+                $("#emailForm h3").text(data.message + data.name);
             }).fail(function(err){
                 alert(err);
             });
