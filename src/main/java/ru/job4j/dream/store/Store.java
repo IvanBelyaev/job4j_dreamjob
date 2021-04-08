@@ -5,6 +5,7 @@ import ru.job4j.dream.model.Post;
 import ru.job4j.dream.model.User;
 
 import java.util.Collection;
+import java.util.Map;
 
 /**
  * Store.
@@ -67,4 +68,17 @@ public interface Store {
      * @return the user with this email, otherwise null.
      */
     User findUserByEmail(String email);
+
+    /**
+     * Finds all cities.
+     * @return all cities. Key - city ID, value - city name.
+     */
+    Map<Integer, String> findAllCities();
+
+    /**
+     * Finds city by ID.
+     * @param id city id.
+     * @return city name.
+     */
+    String findCityById(int id);
 }

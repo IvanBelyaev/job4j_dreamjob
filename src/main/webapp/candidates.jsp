@@ -58,6 +58,7 @@
                     <tr>
                         <th scope="col">Фото</th>
                         <th scope="col">Имя кандидата</th>
+                        <th scope="col">Город</th>
                         <th scope="col"></th>
                     </tr>
                     </thead>
@@ -78,6 +79,10 @@
                                 <i class="fa fa-edit mr-3"></i>
                             </a>
                             <c:out value="${candidate.name}" />
+                        </td>
+                        <td>
+                            <c:import var = "cityName" url = "/cities.do?cityId=${candidate.cityId}"/>
+                            <c:out value = "${cityName}"/>
                         </td>
                         <td>
                             <a href='<c:url value="/deleteCandidate.do?id=${candidate.id}"/>'>

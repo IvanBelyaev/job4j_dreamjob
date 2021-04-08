@@ -10,15 +10,19 @@ public class Candidate {
     private int id;
     /** Candidate name. */
     private String name;
+    /** City ID. */
+    private int cityId;
 
     /**
      * Constructor.
      * @param id ID.
      * @param name candidate name.
+     * @param cityId city ID.
      */
-    public Candidate(int id, String name) {
+    public Candidate(int id, String name, int cityId) {
         this.id = id;
         this.name = name;
+        this.cityId = cityId;
     }
 
     /**
@@ -35,6 +39,22 @@ public class Candidate {
      */
     public void setId(int id) {
         this.id = id;
+    }
+
+    /**
+     * Gets city ID.
+     * @return ID.
+     */
+    public int getCityId() {
+        return cityId;
+    }
+
+    /**
+     * Sets new ID.
+     * @param cityId new city ID.
+     */
+    public void setCityId(int cityId) {
+        this.cityId = cityId;
     }
 
     /**
@@ -64,6 +84,7 @@ public class Candidate {
         if (o == null || getClass() != o.getClass()) return false;
         Candidate candidate = (Candidate) o;
         return id == candidate.id &&
+                cityId == candidate.cityId &&
                 Objects.equals(name, candidate.name);
     }
 
@@ -73,6 +94,6 @@ public class Candidate {
      */
     @Override
     public int hashCode() {
-        return Objects.hash(id, name);
+        return Objects.hash(id, name, cityId);
     }
 }

@@ -6,8 +6,11 @@ import ru.job4j.dream.model.User;
 
 import java.time.LocalDateTime;
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
@@ -23,6 +26,7 @@ public class MemStore implements Store {
     private final Map<Integer, Candidate> candidates = new ConcurrentHashMap<>();
     /** Users. */
     private final Map<String, User> users = new ConcurrentHashMap<>();
+    private final List<String> cities = new CopyOnWriteArrayList<>();
     /** ID counter for posts. */
     private static AtomicInteger POST_ID = new AtomicInteger(4);
     /** ID counter for candidates. */
@@ -38,9 +42,12 @@ public class MemStore implements Store {
         posts.put(1, new Post(1, "Junior Java Job", "no work experience required", now));
         posts.put(2, new Post(2, "Middle Java Job", "Experience from 2 years", now));
         posts.put(3, new Post(3, "Senior Java Job", "Experience from 5 years", now));
-        candidates.put(1, new Candidate(1, "Junior Java"));
-        candidates.put(2, new Candidate(2, "Middle Java"));
-        candidates.put(3, new Candidate(3, "Senior Java"));
+        candidates.put(1, new Candidate(1, "Junior Java", 0));
+        candidates.put(2, new Candidate(2, "Middle Java", 1));
+        candidates.put(3, new Candidate(3, "Senior Java", 2));
+        cities.add("Москва");
+        cities.add("Санкт-Петербург");
+        cities.add("Самара");
     }
 
     /**
@@ -124,5 +131,19 @@ public class MemStore implements Store {
     @Override
     public User findUserByEmail(String email) {
         return users.get(email);
+    }
+
+    @Override
+    public Map<Integer, String> findAllCities() {
+        Map<Integer, String> result = new HashMap<>();
+        for (int i = 0; i < cities.size(); i++) {
+            result.put(i, cities.get(i));
+        }
+        return result;
+    }
+
+    @Override
+    public String findCityById(int id) {
+        return cities.get(id);
     }
 }

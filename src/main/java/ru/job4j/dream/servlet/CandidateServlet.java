@@ -31,16 +31,16 @@ public class CandidateServlet extends HttpServlet {
      * Handles post requests.
      * @param req request.
      * @param resp response.
-     * @throws ServletException possible exception.
      * @throws IOException possible exception.
      */
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         req.setCharacterEncoding("UTF-8");
         PsqlStore.instOf().save(
                 new Candidate(
-                        Integer.valueOf(req.getParameter("id")),
-                        req.getParameter("name")
+                        Integer.parseInt(req.getParameter("id")),
+                        req.getParameter("name"),
+                        Integer.parseInt(req.getParameter("city"))
                 )
         );
         resp.sendRedirect(req.getContextPath() + "/candidates.do");

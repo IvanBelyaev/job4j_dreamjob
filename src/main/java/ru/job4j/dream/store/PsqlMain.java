@@ -22,7 +22,7 @@ public class PsqlMain {
         Post post = store.findPostById(id);
         System.out.println(post.getId() + " " + post.getName() + " " + post.getDescription() + " " + post.getCreated());
 
-        store.save(new Candidate(0, "Java candidate"));
+        store.save(new Candidate(0, "Java candidate", 1));
         id = -1;
         for (Candidate can : store.findAllCandidates()) {
             System.out.println(can.getId() + " " + can.getName());

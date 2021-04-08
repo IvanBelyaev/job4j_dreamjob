@@ -14,10 +14,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Properties;
+import java.util.*;
 
 public class PsqlStore implements Store {
     private Logger logger = LoggerFactory.getLogger(PsqlStore.class.getName());
@@ -85,7 +82,8 @@ public class PsqlStore implements Store {
                     candidates.add(
                             new Candidate(
                                     it.getInt("id"),
-                                    it.getString("name")
+                                    it.getString("name"),
+                                    it.getInt("city_id")
                             ));
                 }
         } catch (SQLException e) {
@@ -131,11 +129,12 @@ public class PsqlStore implements Store {
     private void updateCandidate(Candidate candidate) {
         try (Connection cn = pool.getConnection();
              PreparedStatement ps =  cn.prepareStatement(
-                     "UPDATE candidates SET name=? where id=?"
+                     "UPDATE candidates SET name=?, city_id=? WHERE id=?"
              )
         ) {
             ps.setString(1, candidate.getName());
-            ps.setInt(2, candidate.getId());
+            ps.setInt(2, candidate.getCityId());
+            ps.setInt(3, candidate.getId());
             ps.executeUpdate();
         } catch (SQLException e) {
             logger.error("Exception in updateCandidate()", e);
@@ -145,11 +144,12 @@ public class PsqlStore implements Store {
     private Candidate createCandidate(Candidate candidate) {
         try (Connection cn = pool.getConnection();
              PreparedStatement ps =  cn.prepareStatement(
-                     "INSERT INTO candidates(name) VALUES (?)",
+                     "INSERT INTO candidates(name, city_id) VALUES (?, ?)",
                      PreparedStatement.RETURN_GENERATED_KEYS
              )
         ) {
             ps.setString(1, candidate.getName());
+            ps.setInt(2, candidate.getCityId());
             ps.executeUpdate();
             ResultSet id = ps.getGeneratedKeys();
             if (id.next()) {
@@ -231,7 +231,8 @@ public class PsqlStore implements Store {
             if (it.next()) {
                 candidate = new Candidate(
                         it.getInt("id"),
-                        it.getString("name")
+                        it.getString("name"),
+                        it.getInt("city_id")
                 );
             }
         } catch (SQLException e) {
@@ -276,5 +277,40 @@ public class PsqlStore implements Store {
             logger.error("Exception in findUserByEmail()", e);
         }
         return user;
+    }
+
+    @Override
+    public Map<Integer, String> findAllCities() {
+        Map<Integer, String> cities = new LinkedHashMap<>();
+        try (Connection cn = pool.getConnection();
+             PreparedStatement ps =  cn.prepareStatement("SELECT * FROM cities")
+        ) {
+            try (ResultSet it = ps.executeQuery();) {
+                while (it.next()) {
+                    cities.put(it.getInt("id"), it.getString("name"));
+                }
+            }
+        } catch (SQLException e) {
+            logger.error("Exception in findAllCities()", e);
+        }
+        return cities;
+    }
+
+    @Override
+    public String findCityById(int id) {
+        String city = "";
+        try (Connection cn = pool.getConnection();
+             PreparedStatement ps =  cn.prepareStatement("SELECT name FROM cities where id = ?")
+        ) {
+            ps.setInt(1, id);
+            try (ResultSet it = ps.executeQuery();) {
+                if (it.next()) {
+                    city = it.getString("name");
+                }
+            }
+        } catch (SQLException e) {
+            logger.error("Exception in findCityById()", e);
+        }
+        return city;
     }
 }

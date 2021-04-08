@@ -20,6 +20,25 @@
             integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
 
     <title>Работа мечты</title>
+
+    <script>
+        function validate() {
+            let result = true;
+            if ($("#email").val() === "") {
+                $("#emailLabel").text("Почта (заполните поле)").css("color", "#740000");
+                result = false;
+            } else {
+                $("#emailLabel").text("Почта").css("color", "#000000");
+            }
+            if ($("#password").val() === "") {
+                $("#passwordLabel").text("Пароль (заполните поле)").css("color", "#740000");
+                result = false;
+            } else {
+                $("#passwordLabel").text("Пароль").css("color", "#000000");
+            }
+            return result;
+        }
+    </script>
 </head>
 <body>
 <div class="container pt-3">
@@ -40,14 +59,14 @@
                 Авторизация
             </div>
             <div class="card-body">
-                <form action="<%=request.getContextPath()%>/auth.do" method="post">
+                <form action="<%=request.getContextPath()%>/auth.do" method="post" onsubmit="return validate();">
                     <div class="form-group">
-                        <label>Почта</label>
-                        <input type="text" class="form-control" name="email">
+                        <label id="emailLabel">Почта</label>
+                        <input type="text" class="form-control" id="email" name="email">
                     </div>
                     <div class="form-group">
-                        <label>Пароль</label>
-                        <input type="text" class="form-control" name="password">
+                        <label id="passwordLabel">Пароль</label>
+                        <input type="text" class="form-control" id="password" name="password">
                     </div>
                     <button type="submit" class="btn btn-primary">Войти</button>
                 </form>

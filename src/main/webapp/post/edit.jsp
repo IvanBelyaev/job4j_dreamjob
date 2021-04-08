@@ -21,6 +21,24 @@
             integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
 
     <title>Работа мечты</title>
+    <script>
+        function validate() {
+            let result = true;
+            if ($("#name").val() === "") {
+                $("#nameLabel").text("Имя (заполните поле)").css("color", "#740000");
+                result = false;
+            } else {
+                $("#nameLabel").text("Имя").css("color", "#000000");
+            }
+            if ($("#desc").val() === "") {
+                $("#descLabel").text("Описание (заполните поле)").css("color", "#740000");
+                result = false;
+            } else {
+                $("#descLabel").text("Описание").css("color", "#000000");
+            }
+            return result;
+        }
+    </script>
 </head>
 <body>
 <%
@@ -63,14 +81,14 @@
                 <% } %>
             </div>
             <div class="card-body">
-                <form action="<%=request.getContextPath()%>/posts.do?id=<%=post.getId()%>" method="post">
+                <form action="<%=request.getContextPath()%>/posts.do?id=<%=post.getId()%>" method="post" onsubmit="return validate();">
                     <div class="form-group">
-                        <label>Имя</label>
-                        <input type="text" class="form-control" name="name" value="<%=post.getName()%>">
+                        <label id="nameLabel">Имя</label>
+                        <input type="text" class="form-control" id="name" name="name" value="<%=post.getName()%>">
                     </div>
                     <div class="form-group">
-                        <label>Описание</label>
-                        <input type="text" class="form-control" name="desc" value="<%=post.getDescription()%>">
+                        <label id="descLabel">Описание</label>
+                        <input type="text" class="form-control" id="desc" name="desc" value="<%=post.getDescription()%>">
                     </div>
                     <button type="submit" class="btn btn-primary">Сохранить</button>
                 </form>

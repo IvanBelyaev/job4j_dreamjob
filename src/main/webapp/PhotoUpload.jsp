@@ -9,18 +9,26 @@
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
-          integrity="sha384-Vkoo8x4CGsO3 Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
-            integrity="sha384-J6qa4849blE2 poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ n" crossorigin="anonymous"></script>
+            integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
-            integrity="sha384-Q6E9RHvbIyZFJoft 2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+            integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
             integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-
-    <head>
     <title>Загрузка фотографии</title>
+
+    <script>
+        function validate() {
+            let result = true;
+            if ($("#file").val() === "") {
+                $("#fileLabel").text("Не выбрано ни одной фотографии.").css("color", "#740000");
+                result = false;
+            }
+            return result;
+        }
+    </script>
 </head>
 <body>
 <div class="container pt-3">
@@ -30,10 +38,10 @@
                 Добавьте фото.
             </div>
             <div class="card-body">
-                <form method="post" action='<c:url value="/upload.do?id=${param.id}" />' enctype="multipart/form-data">
+                <form method="post" action='<c:url value="/upload.do?id=${param.id}" />' enctype="multipart/form-data" onsubmit="return validate();">
                     <div class="form-group">
-                        <label>Выберите фотографию.</label>
-                        <input type="file" class="form-control-file" name="file" />
+                        <label id="fileLabel">Выберите фотографию.</label>
+                        <input type="file" class="form-control-file" id="file" name="file" />
                     </div>
                     <button type="submit" class="btn btn-primary">Сохранить</button>
                 </form>
